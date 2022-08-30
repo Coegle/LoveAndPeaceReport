@@ -75,7 +75,11 @@ def get_covid_test_date(token,uuid) -> str:
 
 def mock_covid_test_date() -> str:
     today = datetime.datetime.now()
-    duration = datetime.timedelta(days = 2)
+    day = today.day
+    duration = datetime.timedelta(days = 1)
+    if day % 2 == 0:
+      duration = datetime.timedelta(days = 0)
+    
     mockDate = today - duration
     return mockDate.strftime("%Y-%m-%d %-H")
 
