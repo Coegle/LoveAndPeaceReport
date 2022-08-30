@@ -3,7 +3,7 @@ import json
 import time
 from typing import Tuple
 import requests
-from datetime import datetime
+import datetime
 
 headers_jsstm = {'content-type': 'application/x-www-form-urlencoded; charset=UTF-8'}
 headers_jshscx = {'Content-Type': 'application/json;charset=UTF-8'}
@@ -59,13 +59,13 @@ def get_covid_test_date(token,uuid) -> str:
     
         abc,name = get_abc(token,uuid)
         sw_hs_date = get_sw_hs(abc,name)
-        sw_hs_date = datetime.strptime(sw_hs_date,'%Y-%m-%d %H:%M:%S')
+        sw_hs_date = datetime.datetime.strptime(sw_hs_date,'%Y-%m-%d %H:%M:%S')
         secret = get_secret(abc)
         auth_info = auth_secret(secret)
         report = query_report(auth_info)
         # print(f"report:{report},type:{type(report)}")
         hs_date = report[0]['collectTime']
-        hs_date = datetime.strptime(hs_date,'%Y-%m-%d %H:%M')
+        hs_date = datetime.datetime.strptime(hs_date,'%Y-%m-%d %H:%M')
         hs_date = max(hs_date,sw_hs_date)
         hs_date = hs_date.strftime("%Y-%m-%d %-H")
         return hs_date
